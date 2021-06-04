@@ -20,24 +20,39 @@ const users = [
 const menuList = [
     {
         path: '/home',
-        name: '首页',
-        auth: ['admin', 'test'],
-        children: [],
+        name: 'home',
+        component: 'home/index',
+        meta: {
+            auth: ['admin', 'test'],
+            title: '首页',
+        },
     },
     {
         path: '/system',
-        name: '系统配置',
-        auth: ['admin'],
+        name: 'system',
+        component: 'layout/routeView/parent',
+        redirect: '/system/menu',
+        meta: {
+            auth: ['admin'],
+            title: '系统配置',
+        },
         children: [
             {
                 path: '/system/menu',
-                name: '菜单管理',
-                auth: ['admin'],
+                name: 'systemMenu',
+                component: 'system/menu/index',
+                meta: {
+                    auth: ['admin'],
+                    title: '菜单管理',
+                },
             },
             {
                 path: '/system/user',
-                name: '用户管理',
-                auth: ['admin'],
+                name: 'systemUser',
+                component: 'system/user/index',
+                meta: {
+                    auth: ['admin'],
+                },
             },
         ],
     },
@@ -76,10 +91,9 @@ const mocks: MockMethod[] = [
         response: ({ body }) => {
             const { userId } = body;
 
-            const menus = backEndRouter(menuList, userId);
             return {
                 code: 0,
-                data: menus,
+                data: menuList,
                 message: '请求成功！',
                 token: 'token',
             };

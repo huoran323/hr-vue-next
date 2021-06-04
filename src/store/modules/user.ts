@@ -2,6 +2,7 @@ import { Module } from 'vuex';
 import { LoginParam } from '/@/api/user';
 import { IUserInfo, RootStateTypes } from '../interface/index';
 import { loginApi, getMenuListApi } from '/@/api/user';
+import router, { initBackControlRouters } from '/@/router';
 
 const userModule: Module<IUserInfo, RootStateTypes> = {
     namespaced: true,
@@ -34,15 +35,19 @@ const userModule: Module<IUserInfo, RootStateTypes> = {
         async login({ commit }, param: LoginParam) {
             const response = await loginApi(param);
             console.log('response: ', response);
-            const { userId } = response;
-            this.dispatch('user/getMenuList', userId);
-        },
-        // 获取菜单
-        async getMenuList({ commit }, userId: string) {
+
             // 后端控制路由
-            const response = await getMenuListApi({ userId: userId });
-            console.log('menus: ', response);
+            await initBackControlRouters();
+            router.push('/');
+            // this.dispatch('user/getMenuList', userId);
         },
+        // // 获取菜单
+        // async getMenuList({ commit }, userId: string) {
+        //     // 后端控制路由
+        //     const response = await getMenuListApi({ userId: userId });
+        //     initBackControlRouters(response);
+        //     console.log('menus: ', response);
+        // },
     },
 };
 

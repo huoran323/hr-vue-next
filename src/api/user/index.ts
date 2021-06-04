@@ -15,10 +15,9 @@ export function loginApi(params: LoginParam) {
 }
 
 // 获取路由
-export function getMenuListApi(params: object) {
+export function getMenuListApi() {
     return request({
         url: '/user/getMenuList',
         method: 'post',
-        data: params,
     });
 }
